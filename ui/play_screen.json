@@ -1,26 +1,69 @@
 {
   "namespace": "play",
-
-  //featured server tab
-
-  "featured_server_tab_content_panel@play.common_tab_content_panel": {
-    "$visible_bind_toggle_source_control": "featured_server_navigation_tab_toggle",
-    "$scroll_tab_content": "play.featured_server_scroll_content"
+  
+  "common_play_screen_panel": {
+    "type": "panel",
+    // "variables":[
+    //   {
+    //     "requires": "$desktop_screen",
+    //     "$play_screen_size": [ "75%", "100% - 50px" ]
+    //   }
+    // ]
+    
+    "$play_screen_size": [ "75%", "100% - 50px" ]
   },
-
-  "featured_server_navigation_tab@play.top_tab": {
-    "$tab_view_binding_name": "featured_server_navigation_tab_toggle",
-    "$tab_icon": "server_tab_icon",
-    "$count_text_name": "7",//TODO dynamic
-    "$tab_text_name": "selectWorld.tab.featured",
-    "$toggle_group_forced_index": 2,
-    "$tab_content": "play.common_navigation_tab_content"
-  },
-  "edu_tab_navigation_panel_layout@play.common_tab_navigation_panel_layout": {
+  "default_tab_content_panel_layout": {
     "modifications": [
       {
+        "array_name": "controls",
+        "operation": "insert_after",
+        "control_name": "friends_tab_content",
+        "value": [
+          {
+            "featured_server_tab_content_panel@play.featured_server_tab_content_panel": {}
+          }
+        ]
+      }
+    ]
+  },
+  "edu_tab_content_panel_layout": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_after",
+        "control_name": "friends_tab_content",
+        "value": [
+          {
+            "featured_server_tab_content_panel@play.featured_server_tab_content_panel": {}
+          }
+        ]
+      }
+    ]
+  },
+  "default_tab_navigation_panel_layout/world_navigation_tab": {
+    "size": [ "fill", "100%" ]
+  },
+  "default_tab_navigation_panel_layout/friends_navigation_tab": {
+    "size": [ "fill", "100%" ]
+  },
+  "default_tab_navigation_panel_layout/server_navigation_tab": {
+    "size": [ "fill", "100%" ]
+  },
+  "edu_tab_navigation_panel_layout/world_navigation_tab": {
+    "size": [ "fill", "100%" ]
+  },
+  "edu_tab_navigation_panel_layout/friends_navigation_tab": {
+    "size": [ "fill", "100%" ]
+  },
+  "edu_tab_navigation_panel_layout/server_navigation_tab": {
+    "size": [ "fill", "100%" ]
+  },
+  "default_tab_navigation_panel_layout": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_after",
         "control_name": "server_navigation_tab",
-        "operation": "insert_before",
         "value": [
           {
             "featured_server_navigation_tab@play.featured_server_navigation_tab": {
@@ -31,11 +74,12 @@
       }
     ]
   },
-  "default_tab_content_panel_layout@play.common_tab_navigation_panel_layout": {
+  "edu_tab_navigation_panel_layout": {
     "modifications": [
       {
+        "array_name": "controls",
+        "operation": "insert_after",
         "control_name": "server_navigation_tab",
-        "operation": "insert_before",
         "value": [
           {
             "featured_server_navigation_tab@play.featured_server_navigation_tab": {
@@ -43,6 +87,215 @@
             }
           }
         ]
+      }
+    ]
+  },
+
+  //featured server tab
+
+  "featured_server_tab_content_panel@server_tab_content_panel": {
+    "$visible_bind_toggle_source_control": "featured_server_navigation_tab_toggle",
+    "$scroll_tab_content": "play.featured_server_scroll_content"
+  },
+
+  "featured_server_navigation_tab@server_navigation_tab": {
+    "$tab_view_binding_name": "featured_server_navigation_tab_toggle",
+    "$tab_icon": "server_tab_icon",
+    // "$count_text_name": "7",//TODO dynamic
+    "$tab_text_name": "selectWorld.tab.featured",
+    "$toggle_group_forced_index": 3//2
+    // "$tab_content": "play.common_navigation_tab_content"
+  },
+
+  "featured_server_scroll_content@server_scroll_content":{
+    "$ignore_featured_servers":false,
+    "$ignore_add_servers":true
+  },
+  "server_scroll_content":{
+    "$ignore_featured_servers":true,
+    "$ignore_add_servers":false
+  },
+  "server_scroll_panel":{
+    "controls": [
+      {
+        "stack_panel": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [ "100%- 3px", "100%c + 1px" ],
+          "anchor_from": "top_right",
+          "anchor_to": "top_right",
+          "controls": [
+            {
+              "padding_0": {
+                "type": "panel",
+                "size": [ "100%", 3 ]
+              }
+            },
+            {
+              "servers_crossplatform_disabled_panel@play.crossplatform_disabled_panel": {
+                "$cross_platform_information_text": "crossPlatformToggle.crossPlatformDisabled.servers"
+              }
+            },
+            {
+              "no_featured_server_connection@play.information_panel": {
+                "ignored": "(not $is_ps4)",
+                "$information_label_font": "smooth",
+                "$information_panel_label_text": "#internet_connection_text",
+                "$information_panel_label_text_binding_type": "global",
+                "$information_panel_label_text_binding_condition": "always_when_visible",
+                "bindings": [
+                  {
+                    "binding_name": "(not #is_network_available)",
+                    "binding_name_override": "#visible"
+                  }
+                ]
+              }
+            },
+            {
+              "more_servers_blocked_panel": {
+                "type": "stack_panel",
+                "size": [ "100%", "100%c" ],
+                "orientation": "vertical",
+                "visible": false,
+                "ignored": "($ignore_add_servers or $ignore_3rd_party_servers)",
+                "bindings": [
+                  {
+                    "binding_name": "#multiplayer_blocked_panel_visible",
+                    "binding_name_override": "#visible"
+                  }
+                ],
+                "controls": [
+                  {
+                    "server_multiplayer_privileges_blocked@play.information_panel": {
+                      "$information_label_font": "smooth",
+                      "$information_panel_label_text": "#multiplayer_blocked_text",
+                      "$information_panel_label_text_binding_type": "global",
+                      "$information_panel_label_text_binding_condition": "always_when_visible",
+                      "ignored": "($ignore_add_servers or $ignore_3rd_party_servers)"
+                    }
+                  },
+                  {
+                    "open_uri_button@play.open_account_setting_button": {}
+                  }
+                ]
+              }
+            },
+            {
+              "padding_1": {
+                "type": "panel",
+                "size": [ "100%", 3 ]
+              }
+            },
+            {
+              "servers_panel": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [ "100%", "100%c" ],
+                "$focus_id": "left_panel",
+                "controls": [
+                  {
+                    "featured_servers_panel": {
+                      "type": "stack_panel",
+                      "size": [ "100%", "100%c" ],
+                      "ignored": "($ignore_3rd_party_servers or $ignore_featured_servers)",
+                      "$third_party_featured_servers": "thirdPartyWorld.Featured",
+                      "$focus_id": "featured_servers_panel",
+                      "controls": [
+                        {
+                          "loading_featured_panel@play.label_background": {
+                            "size": [ "100%", 40 ],
+                            "controls": [
+                              {
+                                "loading_friends_realms_label@play.light_loading_label": {
+                                  "$label_text": "thirdPartyWorld.loadingFeaturedServers"
+                                }
+                              },
+                              {
+                                "loading_featured_servers_panel@play.loading_featured_servers_panel": {}
+                              }
+
+
+                            ],
+                            "bindings": [
+                              {
+                                "binding_name": "#loading_servers_progress_visible",
+                                "binding_name_override": "#visible"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "padding_1": {
+                            "type": "panel",
+                            "size": [ "100%", 2 ]
+                          }
+                        },
+                        {
+                          "third_party_featured_grid@play.third_party_featured_server_grid": {
+                            "$tts_section_header": "$third_party_featured_servers"
+                          }
+
+                        },
+                        {
+                          "padding_3": {
+                            "type": "panel",
+                            "size": [ "100%", 2 ]
+                          }
+                        }
+                      ],
+                      "bindings": [
+                        {
+                          "binding_name": "#featured_servers_visible_and_available",
+                          "binding_name_override": "#visible"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "more_servers_panel": {
+                      "type": "stack_panel",
+                      "ignored": "($ignore_add_servers or $ignore_3rd_party_servers)",
+                      "size": [ "100%", "100%c" ],
+                      "bindings": [
+                        {
+                          "binding_name": "#is_network_available_and_multiplayer_visible",
+                          "binding_name_override": "#visible"
+                        }
+                      ],
+                      "$tts_section_header": "networkWorld.more_servers",
+                      "controls": [
+                        {
+                          "padding_0": {
+                            "type": "panel",
+                            "size": [ "100%", 2 ]
+                          }
+                        },
+                        {
+                          "more_servers_grid@play.more_servers_grid": {}
+                        },
+                        {
+                          "padding_3": {
+                            "type": "panel",
+                            "size": [ "100%", 4 ],
+                            "bindings": [
+                              {
+                                "binding_name": "#servers_grid_visible",
+                                "binding_name_override": "#visible"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "add_server_button@play.add_server_toggle_button": {}
+            }
+          ]
+        }
       }
     ]
   }
