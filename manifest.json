@@ -1,0 +1,18 @@
+{
+    "format_version": 2,
+    "header": {
+        "description": "Adds a separate tab for featured servers",
+        "name": "Featured Server Tab",
+        "uuid": "5b917720-dc4e-42a8-bcbd-b71c6738a918",
+        "version": [0, 0, 2],
+        "min_engine_version": [1, 16, 100]
+    },
+    "modules": [
+        {
+            "description": "Adds a separate tab for featured servers",
+            "type": "resources",
+            "uuid": "a632882c-8c1c-417e-84a2-e029ac0e33f8",
+            "version": [0, 0, 2]
+        }
+    ]
+}

@@ -1,0 +1,49 @@
+{
+  "namespace": "play",
+
+  //featured server tab
+
+  "featured_server_tab_content_panel@play.common_tab_content_panel": {
+    "$visible_bind_toggle_source_control": "featured_server_navigation_tab_toggle",
+    "$scroll_tab_content": "play.featured_server_scroll_content"
+  },
+
+  "featured_server_navigation_tab@play.top_tab": {
+    "$tab_view_binding_name": "featured_server_navigation_tab_toggle",
+    "$tab_icon": "server_tab_icon",
+    "$count_text_name": "7",//TODO dynamic
+    "$tab_text_name": "selectWorld.tab.featured",
+    "$toggle_group_forced_index": 2,
+    "$tab_content": "play.common_navigation_tab_content"
+  },
+  "edu_tab_navigation_panel_layout@play.common_tab_navigation_panel_layout": {
+    "modifications": [
+      {
+        "control_name": "server_navigation_tab",
+        "operation": "insert_before",
+        "value": [
+          {
+            "featured_server_navigation_tab@play.featured_server_navigation_tab": {
+              "size": [ "25%", "100%" ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "default_tab_content_panel_layout@play.common_tab_navigation_panel_layout": {
+    "modifications": [
+      {
+        "control_name": "server_navigation_tab",
+        "operation": "insert_before",
+        "value": [
+          {
+            "featured_server_navigation_tab@play.featured_server_navigation_tab": {
+              "size": [ "25%", "100%" ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
